@@ -5,6 +5,13 @@
     <UserSecretsId>aspnet-Avancerad_Labb-DFCE7AF8-463D-44FC-96FA-F81FFDDA8681</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200503130850_AddProductTable.cs" />
+    <Compile Remove="Data\Migrations\20200503130850_AddProductTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200503131524_AddProductTable.cs" />
+    <Compile Remove="Data\Migrations\20200503131524_AddProductTable.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
