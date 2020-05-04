@@ -17,7 +17,7 @@ namespace Avancerad_Labb.Controllers
             product.Name = "Glas";
             product.Price = 105.00M;
             product.Description = "Ett stort högkvalitativt drickglas";
-            product.imageURL = "https://picsum.photos/200";
+            product.imageURL = "https://picsum.photos/100";
 
 
             Product product2 = new Product();
@@ -25,13 +25,32 @@ namespace Avancerad_Labb.Controllers
             product2.Name = "Lampa";
             product2.Price = 333.33M;
             product2.Description = "En stark led-lampa";
-            product2.imageURL = "https://picsum.photos/200";
+            product2.imageURL = "https://picsum.photos/100";
 
             products.Add(product);
             products.Add(product2);
 
 
             return View(products);
+        }
+
+        public IActionResult AddToCart(int id)
+        {
+            var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
+            string cartContent = "";
+
+            if(cart.Value != null)
+            {
+                cartContent = cart.Value;
+                cartContent += "," + id;
+            }
+            else
+            {
+                cartContent += id;
+            }
+            Response.Cookies.Append("cart", cartContent);
+
+            return RedirectToAction("Index");
         }
     }
 }

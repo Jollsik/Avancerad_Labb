@@ -16,16 +16,15 @@
                 @Html.DisplayNameFor(model => model.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Namn
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Pris
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Beskrivning
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.imageURL)
             </th>
             <th></th>
         </tr>
@@ -46,12 +45,10 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.imageURL)
+                <img src="@item.imageURL" />
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Köp", "AddToCart", "Products", new {item.ID})
             </td>
         </tr>
 }
