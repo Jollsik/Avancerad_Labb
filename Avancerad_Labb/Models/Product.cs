@@ -7,7 +7,7 @@ namespace Avancerad_Labb.Models
 {
     public class Product
     {
-        public int ID { get; set; }
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Description { get; set; }
