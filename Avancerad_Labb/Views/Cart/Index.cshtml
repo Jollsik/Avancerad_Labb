@@ -1,27 +1,31 @@
 ﻿@model Avancerad_Labb.ViewModels.CartViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Kundvagn";
 }
+<head>
 
-<h1>Index</h1>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Namn
-            </th>
-            <th>
-                Antal
-            </th>
-        </tr>
-    </thead>
 
-    <tbody>
-        @if (Model.products != null)
-        {
-            foreach (var item in Model.products)
+<h1>Kundvagn</h1>
+@if (Model.products != null)
+{
+    <table class="table bg-dark text-info">
+        <thead>
+            <tr>
+                <th>
+                    Namn
+                </th>
+                <th>
+                    Antal
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.products)
             {
                 <tr>
                     <td>
@@ -37,16 +41,18 @@
                     </td>
                 </tr>
             }
-        }
-        else
-        {
-            @Html.ActionLink("Du har inga varor i din varukorg. Tryck här för att gå till produkt-sidan", "Index", "Products")
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <th scope="row">Totalpris</th>
-            <td>@Model.TotalPrice</td>
-        </tr>
-    </tfoot>
-</table>
+        </tbody>
+    </table>
+    <div class="col-md-2 bg-dark text-info">
+        <div>
+            Totalpris: @Model.TotalPrice kr
+        </div>
+        <div>
+            <a href="">Köp nu</a>
+        </div>
+    </div>
+}
+else
+{
+    @Html.ActionLink("Du har inga varor i din varukorg. Tryck här för att gå till produkt-sidan", "Index", "Products")
+}

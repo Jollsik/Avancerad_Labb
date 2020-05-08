@@ -61,7 +61,7 @@ namespace Avancerad_Labb.Controllers
             return View(cvm);
 
         }
-        public IActionResult RemoveItem(string id, CartViewModel cvm)
+        public IActionResult RemoveItem(string id)
         {
             var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
 
