@@ -33,7 +33,7 @@
                     <td>
                         @Html.ActionLink("Redigera antal", "Edit", new { /* id=item.PrimaryKey */ }) |
                         @Html.ActionLink("Detaljer", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item })
+                        @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item.Item2.ID })
                     </td>
                 </tr>
             }
@@ -43,4 +43,10 @@
             @Html.ActionLink("Du har inga varor i din varukorg. Tryck här för att gå till produkt-sidan", "Index", "Products")
         }
     </tbody>
+    <tfoot>
+        <tr>
+            <th scope="row">Totalpris</th>
+            <td>@Model.TotalPrice</td>
+        </tr>
+    </tfoot>
 </table>

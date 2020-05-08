@@ -22,10 +22,10 @@ namespace Avancerad_Labb.Controllers
             var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
 
             CartViewModel cvm = new CartViewModel();
-            if(cart.Value != null)
+            cvm.TotalPrice = 0;
+            if(cart.Value != null && cart.Value.Length > 0)
             {
                 string[] split = cart.Value.Split(",");
-                cvm.TotalPrice = 100;
                 cvm.products = new List<Tuple<int, Product>>();
                 foreach (var stringId in split)
                 {
@@ -38,7 +38,7 @@ namespace Avancerad_Labb.Controllers
                         }
                     }
                     var product = _productService.GetProductById(new Guid(stringId));
-
+                    cvm.TotalPrice += product.Price;
                     if(product != null)
                     {
                         int a = 0;
@@ -65,11 +65,9 @@ namespace Avancerad_Labb.Controllers
         {
             var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
 
-            if (cart.Value != null)
+            if (cart.Value != null && cart.Value.Length > 0)
             {
                 string[] split = cart.Value.Split(",");
-                cvm.TotalPrice = 100;
-                //cvm.products = new List<string>();
                 for (int i = 0; i < split.Length; i++)
                 {
                     if(split[i] == id)
@@ -77,9 +75,25 @@ namespace Avancerad_Labb.Controllers
                         split[i] = "";
                     }
                 }
+                string cartContent = "";
+                foreach(var item in split)
+                {
+                    if(item.Length > 0)
+                    {
+                        cartContent += item + ",";
+                    }
+                }
+                if(cartContent.Length > 0)
+                {
+                    cartContent = cartContent.Remove(cartContent.Length - 1);
+                    Response.Cookies.Append("cart", cartContent);
+                }
+                else
+                {
+                    Response.Cookies.Delete("cart");
+                }
             }
-
-                return RedirectToAction("Index", "Cart");
+            return RedirectToAction("Index", "Cart");
         }
     }
 }
