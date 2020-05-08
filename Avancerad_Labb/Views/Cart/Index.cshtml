@@ -6,23 +6,41 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
+    <thead>
+        <tr>
+            <th>
+                Namn
+            </th>
+            <th>
+                Antal
+            </th>
+        </tr>
+    </thead>
 
     <tbody>
-@foreach (var item in Model.products) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
+        @if (Model.products != null)
+        {
+            foreach (var item in Model.products)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item2.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Item1)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Redigera antal", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Detaljer", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item })
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            @Html.ActionLink("Du har inga varor i din varukorg. Tryck här för att gå till produkt-sidan", "Index", "Products")
+        }
     </tbody>
 </table>

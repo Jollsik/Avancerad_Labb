@@ -35,5 +35,17 @@ namespace Avancerad_Labb.Services
 
             return Products;
         }
+
+        public Product GetProductById(Guid Id)
+        {
+            foreach(var product in Products)
+            {
+                if (product.ID == Id)
+                {
+                    return product;
+                }
+            }
+            return null;
+        }
     }
 }
