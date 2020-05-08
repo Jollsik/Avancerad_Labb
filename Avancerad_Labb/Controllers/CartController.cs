@@ -41,8 +41,19 @@ namespace Avancerad_Labb.Controllers
 
                     if(product != null)
                     {
-                        var productTuple = Tuple.Create(amount, product);
-                        cvm.products.Add(productTuple);
+                        int a = 0;
+                        foreach(var tuple in cvm.products)
+                        {
+                            if(tuple.Item2.ID == product.ID)
+                            {
+                                a++;
+                            }
+                        }
+                        if(a == 0)
+                        {
+                            var productTuple = Tuple.Create(amount, product);
+                            cvm.products.Add(productTuple);
+                        }
                     }
 
                 }
