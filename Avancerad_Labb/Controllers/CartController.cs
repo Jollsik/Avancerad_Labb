@@ -41,15 +41,15 @@ namespace Avancerad_Labb.Controllers
                     cvm.TotalPrice += product.Price;
                     if(product != null)
                     {
-                        int a = 0;
+                        int exists = 0;
                         foreach(var tuple in cvm.products)
                         {
                             if(tuple.Item2.ID == product.ID)
                             {
-                                a++;
+                                exists++;
                             }
                         }
-                        if(a == 0)
+                        if(exists == 0)
                         {
                             var productTuple = Tuple.Create(amount, product);
                             cvm.products.Add(productTuple);
@@ -93,6 +93,38 @@ namespace Avancerad_Labb.Controllers
                     Response.Cookies.Delete("cart");
                 }
             }
+            return RedirectToAction("Index", "Cart");
+        }
+        public IActionResult MinusOneAmount(string id)
+        {
+            var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
+            List<string> spltlist = new List<string>(cart.Value.Split(","));
+            spltlist.Remove(id);
+
+            string cartContent = "";
+            foreach (var item in spltlist)
+            {
+                if (!string.IsNullOrEmpty(cartContent))
+                {
+                    cartContent += "," + item;
+                }
+                else
+                {
+                    cartContent += item;
+                }
+            }
+            Response.Cookies.Append("cart", cartContent);
+
+            return RedirectToAction("Index", "Cart");
+        }
+        public IActionResult PlusOneAmount(string id)
+        {
+            var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
+            string cartContent = cart.Value;
+            cartContent += "," + id;
+
+            Response.Cookies.Append("cart", cartContent);
+
             return RedirectToAction("Index", "Cart");
         }
     }

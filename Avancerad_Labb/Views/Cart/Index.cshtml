@@ -35,8 +35,8 @@
                             @Html.DisplayFor(modelItem => item.Item1)
                         </td>
                         <td>
-                            @Html.ActionLink("-", "Edit", new { /* id=item.PrimaryKey */ }) |
-                            @Html.ActionLink("+", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("-", "MinusOneAmount", "cart", new { id=item.Item2.ID }) |
+                            @Html.ActionLink("+", "PlusOneAmount", "cart", new { id = item.Item2.ID }) |
 
                             @Html.ActionLink("Detaljer", "Details", new { /* id=item.PrimaryKey */ }) |
                             @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item.Item2.ID })
