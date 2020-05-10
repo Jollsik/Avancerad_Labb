@@ -5,49 +5,50 @@
 }
 
 <h1>Produkter</h1>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                Namn
-            </th>
-            <th>
-                Pris
-            </th>
-            <th>
-                Beskrivning
-            </th>
-            <th>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <img src="@item.imageURL" />
-            </td>
-            <td>
-                @Html.ActionLink("Köp", "AddToCart", "Products", new {item.ID})
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div style="overflow-x:auto">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ID)
+                </th>
+                <th>
+                    Namn
+                </th>
+                <th>
+                    Pris
+                </th>
+                <th>
+                    Beskrivning
+                </th>
+                <th>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        <img src="@item.imageURL" />
+                    </td>
+                    <td>
+                        @Html.ActionLink("Köp", "AddToCart", "Products", new {item.ID})
+                    </td>
+                </tr>
+             }
+        </tbody>
+    </table>
+</div>

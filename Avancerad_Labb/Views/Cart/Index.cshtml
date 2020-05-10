@@ -12,37 +12,40 @@
 <h1>Kundvagn</h1>
 @if (Model.products != null)
 {
-    <table class="table bg-dark text-info">
-        <thead>
-            <tr>
-                <th>
-                    Namn
-                </th>
-                <th>
-                    Antal
-                </th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach (var item in Model.products)
-            {
+    <div style="overflow-x:auto">
+        <table class="table bg-dark text-info" style="white-space:nowrap">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Item2.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Item1)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Redigera antal", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Detaljer", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item.Item2.ID })
-                    </td>
+                    <th>
+                        Namn
+                    </th>
+                    <th>
+                        Antal
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Item2.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Item1)
+                        </td>
+                        <td>
+                            @Html.ActionLink("-", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("+", "Edit", new { /* id=item.PrimaryKey */ }) |
+
+                            @Html.ActionLink("Detaljer", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item.Item2.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
     <div class="col-md-2 bg-dark text-info">
         <div>
             Totalpris: @Model.TotalPrice kr
