@@ -55,11 +55,9 @@ namespace Avancerad_Labb.Controllers
                             cvm.products.Add(productTuple);
                         }
                     }
-
                 }
             }
             return View(cvm);
-
         }
         public IActionResult RemoveItem(string id)
         {
