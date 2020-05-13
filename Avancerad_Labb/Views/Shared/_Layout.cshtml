@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-toggleable-md navbar-light bg-dark border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Felldins</a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Felldins</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,8 +30,13 @@
                             <a class="nav-link text-danger" asp-area="" asp-controller="Products" asp-action="Index">Produkter</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" asp-area="" asp-controller="Cart" asp-action="Index">Kundvagn</a>
-
+                            <a class="nav-link text-danger" asp-area="" asp-controller="Cart" asp-action="Index">Kundvagn 
+                            @if (ViewBag.CartCount != null)
+                            {
+                                <text>(</text>
+                                @ViewBag.CartCount
+                                <text>)</text>
+                            }</a>
                         </li>
                     </ul>
                 </div>

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Avancerad_Labb.Controllers
 {
-    public class CartController : Controller
+    public class CartController : AppController
     {
         private readonly IProductService _productService;
         public CartController(IProductService productService)
