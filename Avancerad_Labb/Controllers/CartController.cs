@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Avancerad_Labb.Models;
 using Avancerad_Labb.Services;
 using Avancerad_Labb.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Avancerad_Labb.Controllers
@@ -16,7 +17,7 @@ namespace Avancerad_Labb.Controllers
         {
             _productService = productService;
         }
-
+        [Authorize]
         public IActionResult Index()
         {
             var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
@@ -29,6 +30,7 @@ namespace Avancerad_Labb.Controllers
                 cvm.products = new List<Tuple<int, Product>>();
                 foreach (var stringId in split)
                 {
+                    //Check for amount
                     int amount = 0;
                     for(int i = 0; i < split.Length; i++)
                     {
@@ -41,6 +43,7 @@ namespace Avancerad_Labb.Controllers
                     cvm.TotalPrice += product.Price;
                     if(product != null)
                     {
+                        //Don't create duplicates
                         int exists = 0;
                         foreach(var tuple in cvm.products)
                         {

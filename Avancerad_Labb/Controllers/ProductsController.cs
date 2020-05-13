@@ -20,7 +20,6 @@ namespace Avancerad_Labb.Controllers
         {
             return View(_productService.GetAllProducts());
         }
-        [HttpPost]
         public IActionResult AddToCart(Guid id)
         {
             var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
