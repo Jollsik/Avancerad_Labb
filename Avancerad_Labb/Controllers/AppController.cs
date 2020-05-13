@@ -17,10 +17,5 @@ namespace Avancerad_Labb.Controllers
             base.OnActionExecuting(filterContext);
 
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
     }
 }
