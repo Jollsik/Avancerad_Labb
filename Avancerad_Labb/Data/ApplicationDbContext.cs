@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Avancerad_Labb.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Product> Product { get; set; }
+        //public DbSet<Product> Product { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
