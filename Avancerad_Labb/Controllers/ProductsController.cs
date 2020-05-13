@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Avancerad_Labb.Controllers
 {
-    public class ProductsController : Controller
+    public class ProductsController : AppController
     {
         private readonly IProductService _productService;
         public ProductsController(IProductService productService)
