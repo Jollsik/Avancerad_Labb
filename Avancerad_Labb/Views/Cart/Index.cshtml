@@ -1,0 +1,59 @@
+﻿@model Avancerad_Labb.ViewModels.CartViewModel
+
+@{
+    ViewData["Title"] = "Kundvagn";
+}
+<head>
+
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+
+
+<h1>Kundvagn</h1>
+@if (Model.products != null)
+{
+    <div style="overflow-x:auto">
+        <table class="table bg-dark text-info" style="white-space:nowrap">
+            <thead>
+                <tr>
+                    <th>
+                        Namn
+                    </th>
+                    <th>
+                        Antal
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.products)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Item2.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Item1)
+                        </td>
+                        <td>
+                            @Html.ActionLink("-", "MinusOneAmount", "cart", new { id=item.Item2.ID }) |
+                            @Html.ActionLink("+", "PlusOneAmount", "cart", new { id = item.Item2.ID }) |
+                            @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item.Item2.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-2 bg-dark text-info">
+        <div>
+            Totalpris: @Model.TotalPrice kr
+        </div>
+        <div>
+            <a href="">Köp nu</a>
+        </div>
+    </div>
+}
+else
+{
+    @Html.ActionLink("Du har inga varor i din varukorg. Tryck här för att gå till produkt-sidan", "Index", "Products")
+}
