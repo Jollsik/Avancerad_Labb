@@ -14,8 +14,23 @@
             <div class="card-body">
                 <h5 class="card-title">@item.Name</h5>
                 <p class="card-text">@item.Description</p>
+
+                @*<a href"#" data-productId="@item.ID" class="btn btn-primary" name="cartButton" id="cartButton">Lägg i varukorg</a>*@
+                @*<input type="button" value="Spara" data-productId="@item.ID" class="btn btn-primary cartButton" />*@
+
                 @Html.ActionLink("Lägg till i varukorg", "AddToCart", "Products", new { item.ID })
             </div>
         </div>
     }
 </div>
+
+@*<script type="text/javascript">
+    $(function () {
+        $('.cartButton').click(function (e) {
+            debugger;
+            $.post('@Url.Action("AddToCart", "Products")', { id: $(this).data('productId')}, function (data) {
+                alert(data);
+            });
+        });
+    });
+</script>*@
