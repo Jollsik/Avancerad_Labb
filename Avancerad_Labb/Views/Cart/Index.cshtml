@@ -10,50 +10,58 @@
 
 
 <h1>Kundvagn</h1>
-@if (Model.products != null)
-{
-    <div style="overflow-x:auto">
-        <table class="table bg-dark text-info" style="white-space:nowrap">
-            <thead>
-                <tr>
-                    <th>
-                        Namn
-                    </th>
-                    <th>
-                        Antal
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.products)
-                {
+<form method="post" asp-action="PlaceOrder">
+    @if (Model.OrderRows != null)
+    {
+        <div style="overflow-x:auto">
+            <table class="table bg-dark text-info" style="white-space:nowrap">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Item2.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Item1)
-                        </td>
-                        <td>
-                            @Html.ActionLink("-", "MinusOneAmount", "cart", new { id=item.Item2.ID }) |
-                            @Html.ActionLink("+", "PlusOneAmount", "cart", new { id = item.Item2.ID }) |
-                            @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = item.Item2.ID })
-                        </td>
+                        <th>
+                            Namn
+                        </th>
+                        <th>
+                            Antal
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-2 bg-dark text-info">
-        <div>
-            Totalpris: @Model.TotalPrice kr
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.OrderRows.Count; i++)
+                    {
+                        @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.ID)
+                        @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.imageURL)
+                        @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.Price)
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderRows[i].Product.Name)
+                                @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.OrderRows[i].Amount)
+                                @Html.HiddenFor(modelItem => Model.OrderRows[i].Amount)
+                            </td>
+                            <td>
+                                @Html.ActionLink("-", "MinusOneAmount", "cart", new { id = Model.OrderRows[i].Product.ID }) |
+                                @Html.ActionLink("+", "PlusOneAmount", "cart", new { id = Model.OrderRows[i].Product.ID }) |
+                                @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = Model.OrderRows[i].Product.ID })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
-        <div>
-            <a href="">Köp nu</a>
+        <div class="col-md-2 bg-dark text-info">
+            <div>
+                Totalpris: @Model.TotalPrice kr
+            </div>
+            <div>
+                <input type="submit" value="Köp nu" class="btn btn-primary" />
+            </div>
         </div>
-    </div>
-}
-else
-{
-    @Html.ActionLink("Du har inga varor i din varukorg. Tryck här för att gå till produkt-sidan", "Index", "Products")
-}
+    }
+    else
+    {
+        @Html.ActionLink("Du har inga varor i din varukorg. Tryck här för att gå till produkt-sidan", "Index", "Products")
+    }
+    @Html.HiddenFor(modelItem => Model.TotalPrice)
+</form>

@@ -1,0 +1,67 @@
+﻿@model Avancerad_Labb.Models.Order
+
+@{
+    ViewData["Title"] = "OrderSuccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>OrderSuccess</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<div class="card m-md-2">
+    <div class="card-body">
+        <h5 class="card-title">Order-id: @Model.Id</h5>
+        <p class="card-text">Totalpris: @Model.TotalPrice Kr</p>
+        <p class="card-text">Tid och Datum: @Model.Date</p>
+    </div>
+</div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderRows)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.OrderRows)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Product.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.UserId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.TotalPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.OrderRows)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

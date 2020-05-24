@@ -8,7 +8,7 @@ namespace Avancerad_Labb.ViewModels
 {
     public class CartViewModel
     {
-        public List<Tuple<int, Product>> products { get; set; }
+        public List<OrderRow> OrderRows { get; set; }
         public decimal TotalPrice { get; set; }
     }
 }
