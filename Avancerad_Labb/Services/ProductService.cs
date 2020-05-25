@@ -21,7 +21,7 @@ namespace Avancerad_Labb.Services
 
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            var response = await _httpClient.GetAsync("product/");
+            var response = await _httpClient.GetAsync("/api/product");
             response.EnsureSuccessStatusCode();
             var products = await response.Content.ReadAsStringAsync();
 
@@ -29,14 +29,11 @@ namespace Avancerad_Labb.Services
         }
         public async Task<Product> GetProductById(Guid Id)
         {
-            foreach(var product in ProductList)
-            {
-                if (product.ID == Id)
-                {
-                    return product;
-                }
-            }
-            return null;
+            var response = await _httpClient.GetAsync($"/api/product/{Id}");
+            response.EnsureSuccessStatusCode();
+            var product = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<Product>(product);
         }
     }
 }

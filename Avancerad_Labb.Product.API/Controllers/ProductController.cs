@@ -30,6 +30,7 @@ namespace Avancerad_Labb.Product.API.Controllers
             return null;
         }
         [HttpGet]
+        [Route("{id}")]
         public async Task<ActionResult<Models.Product>>GetProductById(Guid Id)
         {
             Models.Product product = await _context.Products.FindAsync(Id);
@@ -42,5 +43,6 @@ namespace Avancerad_Labb.Product.API.Controllers
                 return null;
             }
         }
+
     }
 }
