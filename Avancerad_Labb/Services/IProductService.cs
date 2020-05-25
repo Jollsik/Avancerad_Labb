@@ -8,7 +8,7 @@ namespace Avancerad_Labb.Services
 {
     public interface IProductService
     {
-        public IEnumerable<Product> GetAllProducts();
-        public Product GetProductById(Guid Id);
+        public Task <IEnumerable<Product>> GetAllProducts();
+        public Task <Product> GetProductById(Guid Id);
     }
 }

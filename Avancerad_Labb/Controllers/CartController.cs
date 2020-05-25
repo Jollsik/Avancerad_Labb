@@ -43,21 +43,21 @@ namespace Avancerad_Labb.Controllers
                         }
                     }
                     var product = _productService.GetProductById(new Guid(stringId));
-                    cvm.TotalPrice += product.Price;
+                    cvm.TotalPrice += product.Result.Price;
                     if (product != null)
                     {
                         //Don't create duplicates
                         int exists = 0;
                         foreach (var item in cvm.OrderRows)
                         {
-                            if (item.Product.ID == product.ID)
+                            if (item.Product.ID == product.Result.ID)
                             {
                                 exists++;
                             }
                         }
                         if (exists == 0)
                         {
-                            OrderRow orderRow = new OrderRow { Product = product, Amount = amount };
+                            OrderRow orderRow = new OrderRow { Product = product.Result, Amount = amount };
                             cvm.OrderRows.Add(orderRow);
                         }
                     }
