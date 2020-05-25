@@ -11,6 +11,11 @@ namespace Avancerad_Labb.Product.API.Data
         {
             context.Database.EnsureCreated();
 
+            if (context.Products.Any())
+            {
+                return;
+            }
+
             Models.Product[] products = new Models.Product[]
             {
                 new Models.Product(){Name="Glas", Description="Ett stort högkvalitativt drickglas",Price=105.00M, imageURL="https://picsum.photos/500"},
