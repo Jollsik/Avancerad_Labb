@@ -12,7 +12,6 @@ namespace Avancerad_Labb.Services
 {
     public class ProductService : IProductService
     {
-        public List<Product> ProductList = new List<Product>();
         private readonly HttpClient _httpClient;
         public ProductService(HttpClient httpClient)
         {
