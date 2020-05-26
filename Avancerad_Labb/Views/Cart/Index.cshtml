@@ -11,7 +11,7 @@
 
 <h1>Kundvagn</h1>
 <form method="post" asp-action="PlaceOrder">
-    @if (Model.OrderRows != null)
+    @if (Model.OrderProducts != null)
     {
         <div style="overflow-x:auto">
             <table class="table bg-dark text-info" style="white-space:nowrap">
@@ -26,24 +26,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < Model.OrderRows.Count; i++)
+                    @for (int i = 0; i < Model.OrderProducts.Count; i++)
                     {
-                        @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.ID)
-                        @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.imageURL)
-                        @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.Price)
+                        @Html.HiddenFor(modelItem => Model.OrderProducts[i].Product.ID)
+                        @Html.HiddenFor(modelItem => Model.OrderProducts[i].Product.imageURL)
+                        @Html.HiddenFor(modelItem => Model.OrderProducts[i].Product.Price)
+                        @Html.HiddenFor(modelItem => Model.OrderProducts[i].Product.Description)
+                        @Html.HiddenFor(modelItem => Model.OrderProducts[i].Amount)
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.OrderRows[i].Product.Name)
-                                @Html.HiddenFor(modelItem => Model.OrderRows[i].Product.Name)
+                                @Html.DisplayFor(modelItem => Model.OrderProducts[i].Product.Name)
+                                @Html.HiddenFor(modelItem => Model.OrderProducts[i].Product.Name)
                             </td>
                             <td>
-                                @Html.DisplayFor(modelItem => Model.OrderRows[i].Amount)
-                                @Html.HiddenFor(modelItem => Model.OrderRows[i].Amount)
+                                @Html.DisplayFor(modelItem => Model.OrderProducts[i].Amount)
                             </td>
                             <td>
-                                @Html.ActionLink("-", "MinusOneAmount", "cart", new { id = Model.OrderRows[i].Product.ID }) |
-                                @Html.ActionLink("+", "PlusOneAmount", "cart", new { id = Model.OrderRows[i].Product.ID }) |
-                                @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = Model.OrderRows[i].Product.ID })
+                                @Html.ActionLink("-", "MinusOneAmount", "cart", new { id = Model.OrderProducts[i].Product.ID }) |
+                                @Html.ActionLink("+", "PlusOneAmount", "cart", new { id = Model.OrderProducts[i].Product.ID }) |
+                                @Html.ActionLink("Ta bort", "RemoveItem", "cart", new { id = Model.OrderProducts[i].Product.ID })
                             </td>
                         </tr>
                     }

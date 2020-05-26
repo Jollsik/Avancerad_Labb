@@ -27,8 +27,8 @@ namespace Avancerad_Labb.Services
 
         public async Task<Order> PostOrder(Order order)
         {
-
-            throw new NotImplementedException();
+            //var response = await _httpClient.PostAsync($"/api/order/{order}");
+            return null;
         }
     }
 }

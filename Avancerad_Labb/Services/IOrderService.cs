@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Avancerad_Labb.Services
 {
-    interface IOrderService
+    public interface IOrderService
     {
         public Task<Order> GetOrderById(Guid Id);
         public Task<Order> PostOrder(Order order);

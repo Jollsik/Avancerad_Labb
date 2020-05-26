@@ -8,16 +8,19 @@ using Avancerad_Labb.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static Avancerad_Labb.ViewModels.CartViewModel;
 
 namespace Avancerad_Labb.Controllers
 {
     public class CartController : AppController
     {
         private readonly IProductService _productService;
+        private readonly IOrderService _orderService;
         private readonly UserManager<ApplicationUser> _userManager;
-        public CartController(IProductService productService, UserManager<ApplicationUser> userManager)
+        public CartController(IProductService productService, IOrderService orderService, UserManager<ApplicationUser> userManager)
         {
             _productService = productService;
+            _orderService = orderService;
             _userManager = userManager;
         }
         [Authorize]
@@ -30,7 +33,7 @@ namespace Avancerad_Labb.Controllers
             if (cart.Value != null && cart.Value.Length > 0)
             {
                 string[] split = cart.Value.Split(",");
-                cvm.OrderRows = new List<OrderRow>();
+                cvm.OrderProducts = new List<OrderProduct>();
                 foreach (var stringId in split)
                 {
                     //Check for amount
@@ -48,7 +51,7 @@ namespace Avancerad_Labb.Controllers
                     {
                         //Don't create duplicates
                         int exists = 0;
-                        foreach (var item in cvm.OrderRows)
+                        foreach (var item in cvm.OrderProducts)
                         {
                             if (item.Product.ID == product.Result.ID)
                             {
@@ -57,8 +60,8 @@ namespace Avancerad_Labb.Controllers
                         }
                         if (exists == 0)
                         {
-                            OrderRow orderRow = new OrderRow { Product = product.Result, Amount = amount };
-                            cvm.OrderRows.Add(orderRow);
+                            OrderProduct orderProduct = new OrderProduct { Product = product.Result, Amount = amount };
+                            cvm.OrderProducts.Add(orderProduct);
                         }
                     }
                 }
@@ -132,14 +135,25 @@ namespace Avancerad_Labb.Controllers
             return RedirectToAction("Index", "Cart");
         }
         [HttpPost]
-        public IActionResult PlaceOrder([Bind("TotalPrice, OrderRows")]CartViewModel vm)
+        public IActionResult PlaceOrder([Bind("TotalPrice, OrderProducts")]CartViewModel vm)
         {
+            ApplicationUser user = _userManager.FindByIdAsync(_userManager.GetUserId(User)).Result;
+
             Order order = new Order();
-            order.Id = Guid.NewGuid();
+            order.FirstName = user.FirstName;
+            order.LastName = user.LastName;
+            order.ZipCode = user.PostalCode;
+            order.City = user.City;
+            order.Adress = user.StreetAddress;
             order.TotalPrice = vm.TotalPrice;
             order.Date = DateTime.Now;
-            order.UserId = Guid.Parse(_userManager.GetUserId(User));
-            order.OrderRows = vm.OrderRows;
+            order.OrderRows = new List<OrderRow>();
+            foreach(var item in vm.OrderProducts)
+            {
+                OrderRow or = new OrderRow { Name = item.Product.Name, Amount = item.Amount, Price = item.Product.Price };
+                order.OrderRows.Add(or);
+            }
+            _orderService.PostOrder(order);
 
             return RedirectToAction("OrderSuccess", new { id = order.Id });
         }
