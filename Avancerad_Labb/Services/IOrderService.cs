@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Avancerad_Labb.Services
 {
-    public interface IProductService
+    public interface IOrderService
     {
-        public Task <IEnumerable<Product>> GetAllProducts();
-        public Task <Product> GetProductById(Guid Id);
+        public Task<Order> GetOrderById(Guid Id);
+        public Task<Order> PostOrder(Order order);
     }
 }

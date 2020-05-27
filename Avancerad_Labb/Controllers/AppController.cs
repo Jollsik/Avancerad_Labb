@@ -12,8 +12,15 @@ namespace Avancerad_Labb.Controllers
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var cart = Request.Cookies.SingleOrDefault(c => c.Key == "cart");
-            string[] split = cart.Value.Split(",");
-            ViewBag.CartCount = split.Count();
+            if(cart.Value != null)
+            {
+                string[] split = cart.Value.Split(",");
+                ViewBag.CartCount = split.Count();
+            }
+            else
+            {
+                ViewBag.CartCount = 0;
+            }
             base.OnActionExecuting(filterContext);
 
         }

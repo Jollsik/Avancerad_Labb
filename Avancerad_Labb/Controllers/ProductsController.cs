@@ -16,9 +16,9 @@ namespace Avancerad_Labb.Controllers
             _productService = productService;
         }
         
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_productService.GetAllProducts());
+            return View(await _productService.GetAllProducts());
         }
         public IActionResult AddToCart(Guid id)
         {

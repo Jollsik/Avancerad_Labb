@@ -36,7 +36,8 @@ namespace Avancerad_Labb
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddSingleton<IProductService, ProductService>();
+            services.AddHttpClient<IProductService, ProductService>(client => client.BaseAddress = new Uri("http://localhost:55340"));
+            services.AddHttpClient<IOrderService, OrderService>(client => client.BaseAddress = new Uri("http://localhost:58617"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
