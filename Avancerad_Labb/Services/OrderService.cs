@@ -27,8 +27,14 @@ namespace Avancerad_Labb.Services
 
         public async Task<Order> PostOrder(Order order)
         {
-            //var response = await _httpClient.PostAsync($"/api/order/{order}");
-            return null;
+            var JsonOrder = JsonConvert.SerializeObject(order);
+            var orderContent = new StringContent(JsonOrder, System.Text.Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("/api/order", orderContent);
+
+            var orderResponse = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<Order>(orderResponse);
         }
     }
 }

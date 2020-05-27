@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avancerad_Labb.OrderAPI.Data;
 using Avancerad_Labb.OrderAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Avancerad_Labb.OrderAPI.Controllers
 {
@@ -19,7 +21,7 @@ namespace Avancerad_Labb.OrderAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder([FromBody]Order order)
         {
             _context.Add(order);
             await _context.SaveChangesAsync();
@@ -34,7 +36,7 @@ namespace Avancerad_Labb.OrderAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult<Order>> GetOrderById(Guid Id)
         {
-            Order order = await _context.Orders.FindAsync(Id);
+            Order order = await _context.Orders.Include(or => or.OrderRows).FirstOrDefaultAsync(o => o.Id == Id);
             if (order != null)
             {
                 return order;

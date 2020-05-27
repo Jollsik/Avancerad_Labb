@@ -135,7 +135,7 @@ namespace Avancerad_Labb.Controllers
             return RedirectToAction("Index", "Cart");
         }
         [HttpPost]
-        public IActionResult PlaceOrder([Bind("TotalPrice, OrderProducts")]CartViewModel vm)
+        public async Task<IActionResult> PlaceOrder([Bind("TotalPrice, OrderProducts")]CartViewModel vm)
         {
             ApplicationUser user = _userManager.FindByIdAsync(_userManager.GetUserId(User)).Result;
 
@@ -153,14 +153,14 @@ namespace Avancerad_Labb.Controllers
                 OrderRow or = new OrderRow { Name = item.Product.Name, Amount = item.Amount, Price = item.Product.Price };
                 order.OrderRows.Add(or);
             }
-            _orderService.PostOrder(order);
-
-            return RedirectToAction("OrderSuccess", new { id = order.Id });
+            var postedOrder = await _orderService.PostOrder(order);
+            Response.Cookies.Delete("cart");
+            return RedirectToAction("OrderSuccess", new { id = postedOrder.Id });
         }
-        public IActionResult OrderSuccess(Guid id)
+        public async Task<IActionResult> OrderSuccess(Guid id)
         {
-
-            return View();
+            Order order = await _orderService.GetOrderById(id);
+            return View(order);
         }
     }
 }
