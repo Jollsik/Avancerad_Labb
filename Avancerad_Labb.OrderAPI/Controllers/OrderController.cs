@@ -46,5 +46,18 @@ namespace Avancerad_Labb.OrderAPI.Controllers
                 return null;
             }
         }
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult> DeleteOrderById(Guid id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            if(order != null)
+            {
+                var result = _context.Remove(order);
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            return null;
+        }
     }
 }
