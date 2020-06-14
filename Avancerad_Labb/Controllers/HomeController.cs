@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Avancerad_Labb.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication;
 
 namespace Avancerad_Labb.Controllers
 {
@@ -14,11 +15,13 @@ namespace Avancerad_Labb.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _logger = logger;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult Index()
@@ -40,8 +43,7 @@ namespace Avancerad_Labb.Controllers
         {
             ApplicationUser user = _userManager.FindByIdAsync(_userManager.GetUserId(User)).Result;
             await _userManager.DeleteAsync(user);
-
-            TempData["Message"] = "User Deleted Successfully. ";
+            await _signInManager.SignOutAsync();
 
             return RedirectToAction("Index");
         }

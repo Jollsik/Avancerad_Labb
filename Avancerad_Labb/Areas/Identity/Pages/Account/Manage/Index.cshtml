@@ -45,7 +45,31 @@
                 <span asp-validation-for="Input.City" class="text-danger"></span>
             </div>
             <button id="update-profile-button" type="submit" class="btn btn-primary">Spara</button>
-            @Html.ActionLink("Ta bort konto", "DeleteUser", "home")
+
+            <a asp-action="ProfilePictureModal" data-toggle="modal" data-target="#RemoveAccountModal">Ta bort konto</a>
+
+            <div class="modal fade" id="RemoveAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ta bort konto</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class=" modal-body">
+                            Du tryckte på ta bort konto. Är du säker på att du vill ta bort ditt konto?
+                            All information som finns sparad om dig kommer tas bort. Du kan INTE få tillbaka ditt konto igen om du trycker
+                            på ta bort.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Avbryt</button>
+                            @Html.ActionLink("Ta bort konto", "DeleteUser", "home")
+                        </div>
+                    </div>
+                </div>
+            </div>
         </form>
     </div>
 </div>
