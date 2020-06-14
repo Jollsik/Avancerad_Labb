@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Avancerad_Labb.Services;
 using Avancerad_Labb.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Avancerad_Labb
 {
@@ -35,9 +36,14 @@ namespace Avancerad_Labb
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-            services.AddRazorPages();
             services.AddHttpClient<IProductService, ProductService>(client => client.BaseAddress = new Uri("http://localhost:55340"));
             services.AddHttpClient<IOrderService, OrderService>(client => client.BaseAddress = new Uri("http://localhost:58617"));
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +62,7 @@ namespace Avancerad_Labb
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseRouting();
 
